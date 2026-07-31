@@ -1,14 +1,19 @@
 # 프로젝트명
 
+
 ## 📁 프로젝트 구조
-src/main/java/~~
-├── 기능
-    ├── code(errorCode)
+
+```text
+src/main/java
+└── auth
+    ├── code
+    │   └── errorCode
     ├── controller
-    └── domain
-    └── dto
-    └── serivce
-    └── repository
+    ├── domain
+    ├── dto
+    ├── repository
+    └── service
+```
 
     
 ## 🌿 Branch Convention
