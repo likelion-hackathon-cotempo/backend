@@ -9,6 +9,7 @@ src/main/java/~~
     └── dto
     └── serivce
     └── repository
+
     
 ## 🌿 Branch Convention
 
@@ -30,6 +31,7 @@ type/이슈번호-작업내용
 | test | 테스트 코드 작성 | `test/6-member-service` |
 
 ---
+
 
 ## 💬 Commit Convention
 
