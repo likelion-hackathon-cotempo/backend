@@ -2,6 +2,7 @@ package cultureland.hackathon.global.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import cultureland.hackathon.global.code.GeneralSuccessCode;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
