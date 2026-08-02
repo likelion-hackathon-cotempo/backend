@@ -1,3 +1,11 @@
+---
+name: 기능 추가
+about: 새로운 기능을 제안하거나 구현합니다.
+title: "[Feat] "
+labels: ""
+assignees: ""
+---
+
 ## ✨ 구현할 기능
 
 -
