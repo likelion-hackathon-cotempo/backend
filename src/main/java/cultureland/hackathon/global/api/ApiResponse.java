@@ -65,7 +65,7 @@ public class ApiResponse<T> {
         );
     }
 
-    public static ApiResponse<Object> onFailure(
+    public static ApiResponse<Void> onFailure(
             BaseErrorCode errorCode,
             Object error
     ) {
