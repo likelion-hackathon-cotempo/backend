@@ -1,4 +1,4 @@
-package cultureland.hackathon.config;
+package cultureland.hackathon.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
