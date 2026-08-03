@@ -26,6 +26,8 @@ services:
       DB_URL: jdbc:mysql://db:3306/rhythm?connectionTimeZone=UTC&characterEncoding=UTF-8
       DB_USERNAME: root
       DB_PASSWORD: 1234
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ACCESS_TOKEN_EXPIRATION: 3600000
     depends_on:
       db:
         condition: service_healthy
