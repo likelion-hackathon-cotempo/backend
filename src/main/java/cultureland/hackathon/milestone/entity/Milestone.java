@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Builder(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class MileStone {
+public class Milestone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +28,8 @@ public class MileStone {
     @Column(name = "due_date_time", nullable = false)
     private LocalDate dueDateTime;
 
-    public static MileStone create(Team team, String title, LocalDate dueDateTime) {
-        return MileStone.builder()
+    public static Milestone create(Team team, String title, LocalDate dueDateTime) {
+        return Milestone.builder()
                 .team(team)
                 .title(title)
                 .dueDateTime(dueDateTime)
