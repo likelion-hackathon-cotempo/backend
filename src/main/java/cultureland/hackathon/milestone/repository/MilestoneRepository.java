@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface MilestoneRepository extends JpaRepository<Milestone, Long> {
 
-    List<Milestone> findAllByTeamOrderByDueDateAsc(Team team);
+    List<Milestone> findAllByTeamOrderByDueDateTimeAsc(Team team);
 
 }
