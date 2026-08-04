@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -26,9 +27,9 @@ public class Milestone {
     private String title;
 
     @Column(name = "due_date_time", nullable = false)
-    private LocalDate dueDateTime;
+    private LocalDateTime dueDateTime;
 
-    public static Milestone create(Team team, String title, LocalDate dueDateTime) {
+    public static Milestone create(Team team, String title, LocalDateTime dueDateTime) {
         return Milestone.builder()
                 .team(team)
                 .title(title)
