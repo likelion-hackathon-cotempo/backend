@@ -3,6 +3,7 @@ package cultureland.hackathon.global.security;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,20 +15,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String BEARER_PREFIX = "Bearer ";
+    private static final String ACCESS_TOKEN_COOKIE =
+            "accessToken";
 
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
     // 모든 HTTP 요청마다 실행되는 필터
-    // Authorization Header에 담긴 JWT 검증 -> 인증된 사용자 정보 SecurityContext에 저장
+    // accessToken 쿠키의 JWT를 검증하고 인증 정보를 SecurityContext에 저장
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -35,19 +37,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        // 1. 요청 Header에서 Authorization 값 꺼냄
-        String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
+        String token = resolveToken(request);
 
-        // 2. Authorization Header 없거나 Bearer 형식 아니면 인증 처리 x -> 다음 필터로 넘김
-        if (authorizationHeader == null || !authorizationHeader.startsWith(BEARER_PREFIX)) {
+        if (token == null || token.isBlank()) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 3. Bearer 접두사 제거 후 순수 JWT 문자열만 추출
-        String token = authorizationHeader.substring(BEARER_PREFIX.length());
-
-        // 4. 토큰 검증
         if (!jwtTokenProvider.validateToken(token)) {
             handleAuthenticationFailure(
                     request,
@@ -92,5 +88,36 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 response,
                 new BadCredentialsException(message)
         );
+    }
+
+    private String resolveToken(
+            HttpServletRequest request
+    ) {
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies == null) {
+            return null;
+        }
+
+        return Arrays.stream(cookies)
+                .filter(cookie ->
+                        ACCESS_TOKEN_COOKIE.equals(
+                                cookie.getName()
+                        )
+                )
+                .map(Cookie::getValue)
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(
+            HttpServletRequest request
+    ) {
+        String path = request.getServletPath();
+
+        return path.equals("/api/members/login")
+                || path.equals("/api/members/logout")
+                || path.equals("/actuator/health");
     }
 }
