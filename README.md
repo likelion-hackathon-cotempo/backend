@@ -5,12 +5,11 @@
 
 ```text
 src/main/java
-└── auth
+└── 기능
     ├── code
-    │   └── errorCode
     ├── controller
-    ├── domain
     ├── dto
+    ├── entity
     ├── repository
     └── service
 ```
