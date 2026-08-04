@@ -1,6 +1,8 @@
 package cultureland.hackathon.schedule.entity;
 
+import cultureland.hackathon.global.exception.GeneralException;
 import cultureland.hackathon.member.entity.Member;
+import cultureland.hackathon.schedule.code.errorCode.ScheduleErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -48,6 +50,7 @@ public class Schedule {
     public static Schedule createNationalHoliday(Member member, String title,
                                                  LocalDateTime startDateTime,
                                                  LocalDateTime endDateTime) {
+        validate(startDateTime, endDateTime, MAX_WEIGHT);
         return Schedule.builder()
                 .member(member)
                 .title(title)
@@ -63,6 +66,7 @@ public class Schedule {
                                                LocalDateTime startDateTime,
                                                LocalDateTime endDateTime,
                                                int weight) {
+        validate(startDateTime, endDateTime, weight);
         return Schedule.builder()
                 .member(member)
                 .title(title)
@@ -78,6 +82,7 @@ public class Schedule {
                                           LocalDateTime startDateTime,
                                           LocalDateTime endDateTime,
                                           int weight) {
+        validate(startDateTime, endDateTime, weight);
         return Schedule.builder()
                 .member(member)
                 .title(title)
@@ -86,6 +91,15 @@ public class Schedule {
                 .endDateTime(endDateTime)
                 .weight(weight)
                 .build();
+    }
+
+    private static void validate(LocalDateTime start, LocalDateTime end, int weight) {
+        if (start.isAfter(end)) {
+            throw new GeneralException(ScheduleErrorCode.INVALID_DATE_RANGE);
+        }
+        if (weight < MIN_WEIGHT || weight > MAX_WEIGHT) {
+            throw new GeneralException(ScheduleErrorCode.INVALID_WEIGHT);
+        }
     }
 
 }
