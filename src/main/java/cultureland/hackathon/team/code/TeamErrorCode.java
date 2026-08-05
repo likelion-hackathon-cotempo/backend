@@ -1,4 +1,4 @@
-package cultureland.hackathon.team.code.errorCode;
+package cultureland.hackathon.team.code;
 
 import cultureland.hackathon.global.code.BaseErrorCode;
 import lombok.Getter;
