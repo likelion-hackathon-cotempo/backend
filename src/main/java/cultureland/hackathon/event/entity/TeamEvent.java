@@ -1,5 +1,7 @@
 package cultureland.hackathon.event.entity;
 
+import cultureland.hackathon.event.code.TeamEventErrorCode;
+import cultureland.hackathon.global.exception.GeneralException;
 import cultureland.hackathon.team.entity.Team;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,11 +38,18 @@ public class TeamEvent {
     public static TeamEvent create(Team team, String title,
                                    LocalDateTime startDateTime,
                                    LocalDateTime endDateTime) {
+        validate(startDateTime, endDateTime);
         return TeamEvent.builder()
                 .team(team)
                 .title(title)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
                 .build();
+    }
+
+    private static void validate(LocalDateTime start, LocalDateTime end) {
+        if (!start.isBefore(end)) {
+            throw new GeneralException(TeamEventErrorCode.INVALID_DATE_RANGE);
+        }
     }
 }

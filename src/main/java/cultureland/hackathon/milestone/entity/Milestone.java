@@ -4,7 +4,7 @@ import cultureland.hackathon.team.entity.Team;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Builder(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class MileStone {
+public class Milestone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +26,10 @@ public class MileStone {
     private String title;
 
     @Column(name = "due_date_time", nullable = false)
-    private LocalDate dueDateTime;
+    private LocalDateTime dueDateTime;
 
-    public static MileStone create(Team team, String title, LocalDate dueDateTime) {
-        return MileStone.builder()
+    public static Milestone create(Team team, String title, LocalDateTime dueDateTime) {
+        return Milestone.builder()
                 .team(team)
                 .title(title)
                 .dueDateTime(dueDateTime)
