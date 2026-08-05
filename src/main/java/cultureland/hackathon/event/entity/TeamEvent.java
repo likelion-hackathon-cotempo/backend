@@ -48,7 +48,7 @@ public class TeamEvent {
     }
 
     private static void validate(LocalDateTime start, LocalDateTime end) {
-        if (start.isAfter(end)) {
+        if (!start.isBefore(end)) {
             throw new GeneralException(TeamEventErrorCode.INVALID_DATE_RANGE);
         }
     }

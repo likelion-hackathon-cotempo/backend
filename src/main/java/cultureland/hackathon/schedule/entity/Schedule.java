@@ -94,7 +94,7 @@ public class Schedule {
     }
 
     private static void validate(LocalDateTime start, LocalDateTime end, int weight) {
-        if (start.isAfter(end)) {
+        if (!start.isBefore(end)) {
             throw new GeneralException(ScheduleErrorCode.INVALID_DATE_RANGE);
         }
         if (weight < MIN_WEIGHT || weight > MAX_WEIGHT) {
