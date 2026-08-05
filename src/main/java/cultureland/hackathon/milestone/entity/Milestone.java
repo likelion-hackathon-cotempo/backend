@@ -4,7 +4,6 @@ import cultureland.hackathon.team.entity.Team;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
