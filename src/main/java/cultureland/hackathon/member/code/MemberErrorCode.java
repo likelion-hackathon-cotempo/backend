@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum MemberErrorCode implements BaseErrorCode {
 
-    MEMBER_CREDENTIALS(
+    INVALID_CREDENTIALS(
             HttpStatus.UNAUTHORIZED,
             "MEMBER_401_1",
             "Invalid email or password."),
