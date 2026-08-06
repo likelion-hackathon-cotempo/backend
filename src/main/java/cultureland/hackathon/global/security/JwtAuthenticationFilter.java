@@ -44,15 +44,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (!jwtTokenProvider.validateToken(token)) {
-            handleAuthenticationFailure(
-                    request,
-                    response,
-                    "유효하지 않은 토큰입니다."
-            );
-            return;
-        }
-
         Long memberId;
 
         try {
@@ -61,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             handleAuthenticationFailure(
                     request,
                     response,
-                    "토큰의 회원 정보가 올바르지 않습니다."
+                    "유효하지 않은 토큰입니다."
             );
             return;
         }
@@ -116,8 +107,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) {
         String path = request.getServletPath();
 
-        return path.equals("/api/members/login")
-                || path.equals("/api/members/logout")
+        return path.equals("/api/v1/auth/login")
+                || path.equals("/api/v1/auth/logout")
+                || path.equals("/api/v1/auth/signup")
                 || path.equals("/actuator/health");
     }
 }

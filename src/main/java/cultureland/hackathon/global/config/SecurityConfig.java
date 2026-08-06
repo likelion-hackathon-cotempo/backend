@@ -49,8 +49,8 @@ public class SecurityConfig {
                         .requestMatchers("/actuator/health").permitAll()    // 배포에 필요함
                         .requestMatchers(
                                 HttpMethod.POST,
-                                "/api/members/login",
-                                "/api/members/logout"
+                                "/api/v1/auth/login",
+                                "/api/v1/auth/logout"
                         ).permitAll()
 
                         .anyRequest().authenticated()
