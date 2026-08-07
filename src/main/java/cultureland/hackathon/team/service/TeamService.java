@@ -5,10 +5,7 @@ import cultureland.hackathon.member.code.MemberErrorCode;
 import cultureland.hackathon.member.entity.Member;
 import cultureland.hackathon.member.repository.MemberRepository;
 import cultureland.hackathon.team.code.TeamErrorCode;
-import cultureland.hackathon.team.dto.TeamCreateRequestDto;
-import cultureland.hackathon.team.dto.TeamCreateResponseDto;
-import cultureland.hackathon.team.dto.TeamJoinRequestDto;
-import cultureland.hackathon.team.dto.TeamSummaryResponseDto;
+import cultureland.hackathon.team.dto.*;
 import cultureland.hackathon.team.entity.Team;
 import cultureland.hackathon.team.entity.TeamMember;
 import cultureland.hackathon.team.entity.TeamRole;
@@ -18,6 +15,8 @@ import cultureland.hackathon.team.util.InviteCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -65,8 +64,56 @@ public class TeamService {
         return TeamSummaryResponseDto.from(teamMember);
     }
 
+    // 참여 중인 팀 목록 조회
+    public List<TeamSummaryResponseDto> getMyTeams(Long memberId) {
+        Member member = getMember(memberId);
+
+        return teamMemberRepository.findAllByMemberWithTeam(member).stream()
+                .map(TeamSummaryResponseDto::from)
+                .toList();
+    }
+
+    // 팀 상세 조회 — 팀 멤버만 조회 가능
+    public TeamDetailResponseDto getTeamDetail(Long memberId, Long teamId) {
+        Member member = getMember(memberId);
+        Team team = getTeam(teamId);
+        TeamMember teamMember = getTeamMember(team, member);
+
+        return TeamDetailResponseDto.of(team, teamMember.getRole());
+    }
+
+    // 팀원 목록 조회 — 팀 멤버만 조회 가능
+    public List<TeamMemberResponseDto> getTeamMembers(Long memberId, Long teamId) {
+        Member member = getMember(memberId);
+        Team team = getTeam(teamId);
+        validateTeamMember(team, member);
+
+        return teamMemberRepository.findAllByTeamWithMember(team).stream()
+                .map(TeamMemberResponseDto::from)
+                .toList();
+    }
+
     private Member getMember(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new GeneralException(MemberErrorCode.MEMBER_NOT_FOUND));
+    }
+
+    private Team getTeam(Long teamId) {
+        return teamRepository.findById(teamId)
+                .orElseThrow(() -> new GeneralException(TeamErrorCode.TEAM_NOT_FOUND));
+    }
+
+    // 팀 소속 검증 + 해당 팀에서의 역할이 필요할 때
+    private TeamMember getTeamMember(Team team, Member member) {
+        return teamMemberRepository.findByTeamAndMember(team, member)
+                .orElseThrow(() -> new GeneralException(TeamErrorCode.NOT_TEAM_MEMBER));
+    }
+
+    // 팀 소속 검증만 필요할 때
+    private void validateTeamMember(Team team, Member member) {
+        if (!teamMemberRepository.existsByTeamAndMember(team, member)) {
+            throw new GeneralException(TeamErrorCode.NOT_TEAM_MEMBER);
+        }
+    }
 
 }
