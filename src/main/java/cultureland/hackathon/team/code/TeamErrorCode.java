@@ -28,11 +28,6 @@ public enum TeamErrorCode implements BaseErrorCode {
             HttpStatus.CONFLICT,
             "TEAM_409_1",
             "You have already joined this team."
-    ),
-    INVITE_CODE_GENERATION_FAILED(
-            HttpStatus.INTERNAL_SERVER_ERROR,
-            "TEAM_500_1",
-            "Failed to generate a unique invite code."
     );
 
     private final HttpStatus httpStatus;
