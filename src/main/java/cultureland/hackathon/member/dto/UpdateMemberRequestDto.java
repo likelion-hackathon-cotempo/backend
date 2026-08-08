@@ -1,7 +1,5 @@
 package cultureland.hackathon.member.dto;
 
-import cultureland.hackathon.global.exception.GeneralException;
-import cultureland.hackathon.member.code.MemberErrorCode;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
