@@ -43,7 +43,7 @@ public class Member {
                 .build();
     }
 
-    public void reviseInfo(String name, String country, String timezone) {
+    public void updateInfo(String name, String country, String timezone) {
         if (name != null) {
             this.name = name;
         }
