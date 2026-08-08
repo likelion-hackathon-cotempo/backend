@@ -21,10 +21,9 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public void signup(SignupRequestDto requestDto) {
-        memberRepository.findByEmail(requestDto.getEmail())
-                .ifPresent(member -> {
-                    throw new GeneralException(MemberErrorCode.DUPLICATE_EMAIL);
-                });
+        if (memberRepository.existsByEmail(requestDto.getEmail())) {
+            throw new GeneralException(MemberErrorCode.DUPLICATE_EMAIL);
+        }
         String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
 
         Member member = Member.create(
