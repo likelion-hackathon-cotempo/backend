@@ -9,8 +9,19 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum MemberErrorCode implements BaseErrorCode {
 
-    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_1", "회원을 찾을 수 없습니다."),
-    DUPLICATE_EMAIL(HttpStatus.CONFLICT, "MEMBER_409_1", "이미 사용 중인 이메일입니다.");
+    INVALID_CREDENTIALS(
+            HttpStatus.UNAUTHORIZED,
+            "MEMBER_401_1",
+            "Invalid email or password."),
+    MEMBER_NOT_FOUND(
+            HttpStatus.NOT_FOUND,
+            "MEMBER_404_1",
+            "Member not found."
+    ),
+    DUPLICATE_EMAIL(
+            HttpStatus.CONFLICT,
+            "MEMBER_409_1",
+            "An account with this email already exists.");
 
     private final HttpStatus httpStatus;
     private final String code;
