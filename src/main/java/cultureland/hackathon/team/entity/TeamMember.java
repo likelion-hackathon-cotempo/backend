@@ -26,6 +26,9 @@ public class TeamMember {
     @Column(nullable = false, length = 20)
     private TeamRole role;
 
+    @Column(length = 30)
+    private String position;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
@@ -34,9 +37,10 @@ public class TeamMember {
     @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
-    public static TeamMember create(TeamRole role, Member member, Team team) {
+    public static TeamMember create(TeamRole role, String position, Member member, Team team) {
         return TeamMember.builder()
                 .role(role)
+                .position(position)
                 .member(member)
                 .team(team)
                 .build();

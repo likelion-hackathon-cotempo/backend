@@ -1,11 +1,13 @@
 package cultureland.hackathon.member.controller;
 
 import cultureland.hackathon.global.api.ApiResponse;
+import cultureland.hackathon.global.config.SwaggerConfig;
 import cultureland.hackathon.global.security.AuthMember;
 import cultureland.hackathon.member.dto.MemberResponseDto;
 import cultureland.hackathon.member.dto.UpdateMemberRequestDto;
 import cultureland.hackathon.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/members/me")
 @RequiredArgsConstructor
+@SecurityRequirement(name = SwaggerConfig.SECURITY_SCHEME_NAME)
 @Tag(
         name = "회원",
         description = "회원 정보 조회 및 수정 API"
