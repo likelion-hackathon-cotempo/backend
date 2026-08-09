@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class TeamService {
 
@@ -30,7 +30,6 @@ public class TeamService {
 
     // 팀 생성 - 생성자는 자동으로 OWNER 참여
     // 초대 코드 중복은 team.invite_code의 unique 제약으로 처리
-    @Transactional
     public TeamCreateResponseDto createTeam(Long memberId, TeamCreateRequestDto requestDto) {
         Member member = getMember(memberId);
 
@@ -46,7 +45,6 @@ public class TeamService {
     }
 
     // 초대 코드로 팀 참여 - 자동으로 MEMBER 참여
-    @Transactional
     public TeamSummaryResponseDto joinTeam(Long memberId, TeamJoinRequestDto requestDto) {
         Member member = getMember(memberId);
 
@@ -65,6 +63,7 @@ public class TeamService {
     }
 
     // 참여 중인 팀 목록 조회
+    @Transactional(readOnly = true)
     public List<TeamSummaryResponseDto> getMyTeams(Long memberId) {
         Member member = getMember(memberId);
 
@@ -74,6 +73,7 @@ public class TeamService {
     }
 
     // 팀 상세 조회 — 팀 멤버만 조회 가능
+    @Transactional(readOnly = true)
     public TeamDetailResponseDto getTeamDetail(Long memberId, Long teamId) {
         Member member = getMember(memberId);
         Team team = getTeam(teamId);
@@ -83,6 +83,7 @@ public class TeamService {
     }
 
     // 팀원 목록 조회 — 팀 멤버만 조회 가능
+    @Transactional(readOnly = true)
     public List<TeamMemberResponseDto> getTeamMembers(Long memberId, Long teamId) {
         Member member = getMember(memberId);
         Team team = getTeam(teamId);
