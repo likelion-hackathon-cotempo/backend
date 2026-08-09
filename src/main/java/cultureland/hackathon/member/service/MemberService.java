@@ -68,7 +68,7 @@ public class MemberService {
         }
     }
 
-    private void validateTimezone(String timezone){
+    private void validateTimezone(String timezone) {
         if (timezone == null) {
             return;
         }

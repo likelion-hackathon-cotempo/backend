@@ -12,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DateTimeException;
+import java.time.ZoneId;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -21,6 +24,9 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public void signup(SignupRequestDto requestDto) {
+
+        validateTimezone(requestDto.getTimezone());
+
         if (memberRepository.existsByEmail(requestDto.getEmail())) {
             throw new GeneralException(MemberErrorCode.DUPLICATE_EMAIL);
         }
@@ -42,10 +48,22 @@ public class AuthService {
         Member member = memberRepository.findByEmail(requestDto.getEmail())
                 .orElseThrow(() -> new GeneralException(MemberErrorCode.INVALID_CREDENTIALS));
 
-        if(!passwordEncoder.matches(requestDto.getPassword(), member.getPassword())){
+        if (!passwordEncoder.matches(requestDto.getPassword(), member.getPassword())) {
             throw new GeneralException(MemberErrorCode.INVALID_CREDENTIALS);
         }
 
         return jwtTokenProvider.createAccessToken(member.getMemberId());
+    }
+
+    private void validateTimezone(String timezone) {
+        if (timezone == null) {
+            return;
+        }
+
+        try {
+            ZoneId.of(timezone);
+        } catch (DateTimeException exception) {
+            throw new GeneralException(MemberErrorCode.INVALID_TIMEZONE);
+        }
     }
 }
