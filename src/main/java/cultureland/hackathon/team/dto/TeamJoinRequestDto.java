@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class TeamJoinRequestDto {
 
     @NotBlank(message = "Invite code is required.")
-    @Size(max = 10, message = "Invite code must not exceed 10 characters.")
+    @Size(min = 6, max = 6, message = "Invite code must not exceed 6 characters.")
     private String inviteCode;
 
     @Size(max = 30, message = "Position must not exceed 30 characters.")
