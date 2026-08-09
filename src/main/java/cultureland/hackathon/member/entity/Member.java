@@ -43,4 +43,18 @@ public class Member {
                 .build();
     }
 
+    public void updateInfo(String name, String country, String timezone) {
+        if (name != null) {
+            this.name = name;
+        }
+
+        if (country != null) {
+            this.country = country;
+        }
+
+        if (timezone != null) {
+            this.timezone = timezone;
+        }
+    }
+
 }
