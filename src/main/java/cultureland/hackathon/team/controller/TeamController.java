@@ -4,9 +4,11 @@ import cultureland.hackathon.global.api.ApiResponse;
 import cultureland.hackathon.global.security.AuthMember;
 import cultureland.hackathon.team.dto.*;
 import cultureland.hackathon.team.service.TeamService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Parameter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
