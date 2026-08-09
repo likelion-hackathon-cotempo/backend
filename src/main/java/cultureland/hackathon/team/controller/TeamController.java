@@ -40,7 +40,7 @@ public class TeamController {
 
     @Operation(
             summary = "팀 참여",
-            description = "초대 코드로 팀에 참여합니다. 참여자는 MEMBER 역할을 가집니다."
+            description = "초대 코드로 팀에 참여합니다. 참여자는 MEMBER 역할을 가지며, 직군 입력이 필수입니다."
     )
     @PostMapping("/join")
     public ApiResponse<TeamSummaryResponseDto> joinTeam(

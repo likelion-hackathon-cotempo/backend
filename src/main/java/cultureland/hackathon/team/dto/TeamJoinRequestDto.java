@@ -13,6 +13,8 @@ public class TeamJoinRequestDto {
     @Size(min = 6, max = 6, message = "Invite code must not exceed 6 characters.")
     private String inviteCode;
 
+    // 팀 내 직군 (예: Backend, UX Designer)
+    @NotBlank(message = "Position is required.")
     @Size(max = 30, message = "Position must not exceed 30 characters.")
     private String position;
 

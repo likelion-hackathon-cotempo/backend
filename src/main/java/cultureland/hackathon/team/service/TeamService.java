@@ -38,7 +38,8 @@ public class TeamService {
         );
 
         teamMemberRepository.save(
-                TeamMember.create(TeamRole.OWNER, requestDto.getPosition(), member, team)
+                // 팀 생성 시에는 직군을 입력받지 않으므로 비워둠
+                TeamMember.create(TeamRole.OWNER, null, member, team)
         );
 
         return TeamCreateResponseDto.from(team);
