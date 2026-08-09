@@ -21,7 +21,18 @@ public enum MemberErrorCode implements BaseErrorCode {
     DUPLICATE_EMAIL(
             HttpStatus.CONFLICT,
             "MEMBER_409_1",
-            "An account with this email already exists.");
+            "An account with this email already exists."
+    ),
+    MISSING_FIELDS(
+            HttpStatus.BAD_REQUEST,
+            "MEMBER_400_1",
+            "At least one field must be provided."
+    ),
+    INVALID_TIMEZONE(
+            HttpStatus.BAD_REQUEST,
+            "MEMBER_400_2",
+            "Invalid time zone."
+    );
 
     private final HttpStatus httpStatus;
     private final String code;
