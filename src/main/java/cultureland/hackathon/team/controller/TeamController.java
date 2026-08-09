@@ -69,7 +69,7 @@ public class TeamController {
 
     @Operation(
             summary = "팀 상세 조회",
-            description = "팀 정보와 초대 코드를 조회합니다. 해당 팀의 멤버만 조회할 수 있습니다."
+            description = "팀 정보, 초대 코드, 팀원 목록을 조회합니다. 해당 팀의 멤버만 조회할 수 있습니다."
     )
     @GetMapping("/{teamId}")
     public ApiResponse<TeamDetailResponseDto> getTeamDetail(

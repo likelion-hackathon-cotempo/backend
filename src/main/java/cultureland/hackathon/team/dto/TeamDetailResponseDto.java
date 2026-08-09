@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -20,12 +22,16 @@ public class TeamDetailResponseDto {
 
     private final TeamRole myRole;
 
-    public static TeamDetailResponseDto of(Team team, TeamRole myRole) {
+    private final List<TeamMemberResponseDto> members;
+
+    public static TeamDetailResponseDto of(Team team, TeamRole myRole,
+                                           List<TeamMemberResponseDto> members) {
         return TeamDetailResponseDto.builder()
                 .teamId(team.getTeamId())
                 .name(team.getName())
                 .inviteCode(team.getInviteCode())
                 .myRole(myRole)
+                .members(members)
                 .build();
 
     }

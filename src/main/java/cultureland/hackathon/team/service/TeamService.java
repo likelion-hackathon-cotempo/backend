@@ -79,7 +79,7 @@ public class TeamService {
         Team team = getTeam(teamId);
         TeamMember teamMember = getTeamMember(team, member);
 
-        return TeamDetailResponseDto.of(team, teamMember.getRole());
+        return TeamDetailResponseDto.of(team, teamMember.getRole(), findTeamMembers(team));
     }
 
     // 팀원 목록 조회 — 팀 멤버만 조회 가능
@@ -102,6 +102,12 @@ public class TeamService {
     private Team getTeam(Long teamId) {
         return teamRepository.findById(teamId)
                 .orElseThrow(() -> new GeneralException(TeamErrorCode.TEAM_NOT_FOUND));
+    }
+
+    private List<TeamMemberResponseDto> findTeamMembers(Team team) {
+        return teamMemberRepository.findAllByTeamWithMember(team).stream()
+                .map(TeamMemberResponseDto::from)
+                .toList();
     }
 
     // 팀 소속 검증 + 해당 팀에서의 역할이 필요할 때
