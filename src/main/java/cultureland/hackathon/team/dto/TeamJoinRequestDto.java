@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class TeamJoinRequestDto {
 
     @NotBlank(message = "Invite code is required.")
-    @Size(min = 6, max = 6, message = "Invite code must not exceed 6 characters.")
+    @Size(min = 6, max = 6, message = "Invite code must be exactly 6 characters.")
     private String inviteCode;
 
     // 팀 내 직군 (예: Backend, UX Designer)
