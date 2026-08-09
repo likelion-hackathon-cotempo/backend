@@ -52,4 +52,22 @@ public class TeamEvent {
             throw new GeneralException(TeamEventErrorCode.INVALID_DATE_RANGE);
         }
     }
+
+    public void update(String title, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        // 부분 수정이므로 전달되지 않은 값은 기존 값을 유지한 뒤 최종 값으로 검증
+        LocalDateTime newStartDateTime =
+                startDateTime != null ? startDateTime : this.startDateTime;
+        LocalDateTime newEndDateTime =
+                endDateTime != null ? endDateTime : this.endDateTime;
+
+        validate(newStartDateTime, newEndDateTime);
+
+        if (title != null) {
+            this.title = title;
+        }
+
+        this.startDateTime = newStartDateTime;
+        this.endDateTime = newEndDateTime;
+    }
+
 }

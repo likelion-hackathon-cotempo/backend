@@ -99,6 +99,17 @@ public class TeamService {
                 .toList();
     }
 
+    // 참여 중인 팀 조회 — 다른 도메인 서비스에서 소속 검증 + 팀 조회 용도로 사용
+    @Transactional(readOnly = true)
+    public Team getJoinedTeam(Long memberId, Long teamId) {
+        Member member = getMember(memberId);
+        Team team = getTeam(teamId);
+        validateTeamMember(team, member);
+
+        return team;
+    }
+
+
     private Member getMember(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new GeneralException(MemberErrorCode.MEMBER_NOT_FOUND));
