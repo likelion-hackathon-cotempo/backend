@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @Transactional
@@ -49,7 +50,10 @@ public class TeamService {
     public TeamSummaryResponseDto joinTeam(Long memberId, TeamJoinRequestDto requestDto) {
         Member member = getMember(memberId);
 
-        Team team = teamRepository.findByInviteCode(requestDto.getInviteCode())
+        // 초대 코드는 대문자로 생성되므로 소문자로 입력해도 조회되도록 정규화
+        String inviteCode = requestDto.getInviteCode().toUpperCase(Locale.ROOT);
+
+        Team team = teamRepository.findByInviteCode(inviteCode)
                 .orElseThrow(() -> new GeneralException(TeamErrorCode.INVALID_INVITE_CODE));
 
         if (teamMemberRepository.existsByTeamAndMember(team, member)) {
