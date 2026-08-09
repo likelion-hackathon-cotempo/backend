@@ -1,11 +1,13 @@
 package cultureland.hackathon.team.controller;
 
 import cultureland.hackathon.global.api.ApiResponse;
+import cultureland.hackathon.global.config.SwaggerConfig;
 import cultureland.hackathon.global.security.AuthMember;
 import cultureland.hackathon.team.dto.*;
 import cultureland.hackathon.team.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Tag(name = "Team", description = "팀 생성 · 참여 · 조회 API")
+@SecurityRequirement(name = SwaggerConfig.SECURITY_SCHEME_NAME)
 @RestController
 @RequestMapping("/api/v1/teams")
 @RequiredArgsConstructor
