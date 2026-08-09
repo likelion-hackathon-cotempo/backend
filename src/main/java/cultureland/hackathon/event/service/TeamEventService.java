@@ -9,15 +9,15 @@ import cultureland.hackathon.event.repository.TeamEventRepository;
 import cultureland.hackathon.global.exception.GeneralException;
 import cultureland.hackathon.team.entity.Team;
 import cultureland.hackathon.team.service.TeamService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-@Getter
+@Service
 @Transactional
 @RequiredArgsConstructor
 public class TeamEventService {
