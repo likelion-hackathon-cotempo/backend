@@ -9,7 +9,16 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum MilestoneErrorCode implements BaseErrorCode {
 
-    MILESTONE_NOT_FOUND(HttpStatus.NOT_FOUND, "MILESTONE_404_1", "마일스톤을 찾을 수 없습니다.");
+    MISSING_FIELDS(
+            HttpStatus.BAD_REQUEST,
+            "MILESTONE_400_1",
+            "At least one field must be provided."
+    ),
+    MILESTONE_NOT_FOUND(
+            HttpStatus.NOT_FOUND,
+            "MILESTONE_404_1",
+            "Milestone not found."
+    );
 
     private final HttpStatus httpStatus;
     private final String code;
