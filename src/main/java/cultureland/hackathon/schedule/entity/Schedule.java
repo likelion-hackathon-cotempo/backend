@@ -2,7 +2,7 @@ package cultureland.hackathon.schedule.entity;
 
 import cultureland.hackathon.global.exception.GeneralException;
 import cultureland.hackathon.member.entity.Member;
-import cultureland.hackathon.schedule.code.ScheduleErrorCode;
+import cultureland.hackathon.schedule.code.PersonalScheduleErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -95,10 +95,10 @@ public class Schedule {
 
     private static void validate(LocalDateTime start, LocalDateTime end, int weight) {
         if (!start.isBefore(end)) {
-            throw new GeneralException(ScheduleErrorCode.INVALID_DATE_RANGE);
+            throw new GeneralException(PersonalScheduleErrorCode.INVALID_DATE_RANGE);
         }
         if (weight < MIN_WEIGHT || weight > MAX_WEIGHT) {
-            throw new GeneralException(ScheduleErrorCode.INVALID_WEIGHT);
+            throw new GeneralException(PersonalScheduleErrorCode.INVALID_WEIGHT);
         }
     }
 
