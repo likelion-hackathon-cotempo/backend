@@ -27,7 +27,7 @@ public class MilestoneResponseDto {
                 .milestoneId(milestone.getMilestoneId())
                 .title(milestone.getTitle())
                 .dueDateTime(milestone.getDueDateTime().toInstant(ZoneOffset.UTC))
-                .completed(milestone.isCompleted)
+                .completed(milestone.isCompleted())
                 .build();
     }
 
