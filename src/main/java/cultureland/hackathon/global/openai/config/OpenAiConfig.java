@@ -17,7 +17,6 @@ public class OpenAiConfig {
 
     @Bean
     public RestClient openAiRestClient(
-        RestClient.Builder builder,
         // key 값 주입
         @Value("${openai.api-key}")
         String apiKey,
@@ -32,7 +31,7 @@ public class OpenAiConfig {
         requestFactory.setConnectTimeout(timeout);
         requestFactory.setReadTimeout(timeout);
 
-        return builder
+        return RestClient.builder()
                 // 공통 주소 설정
                 .baseUrl(OPENAI_BASE_URL)
                 // 모든 요청에 API 인증 헤더 자동 추가
