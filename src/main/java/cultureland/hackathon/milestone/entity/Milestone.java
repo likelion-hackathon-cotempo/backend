@@ -28,11 +28,30 @@ public class Milestone {
     @Column(name = "due_date_time", nullable = false)
     private LocalDateTime dueDateTime;
 
+    @Column(nullable = false)
+    private boolean completed;
+
     public static Milestone create(Team team, String title, LocalDateTime dueDateTime) {
         return Milestone.builder()
                 .team(team)
                 .title(title)
                 .dueDateTime(dueDateTime)
+                .completed(false)
                 .build();
     }
+
+    public void update(String title, LocalDateTime dueDateTime, Boolean completed) {
+        if (title != null) {
+            this.title = title;
+        }
+
+        if (dueDateTime != null) {
+            this.dueDateTime = dueDateTime;
+        }
+
+        if (completed != null) {
+            this.completed = completed;
+        }
+    }
+
 }
