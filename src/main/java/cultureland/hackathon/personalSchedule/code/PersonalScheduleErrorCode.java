@@ -1,4 +1,4 @@
-package cultureland.hackathon.schedule.code;
+package cultureland.hackathon.personalSchedule.code;
 
 import cultureland.hackathon.global.code.BaseErrorCode;
 import lombok.Getter;

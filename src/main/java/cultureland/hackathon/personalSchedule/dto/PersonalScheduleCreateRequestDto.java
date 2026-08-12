@@ -1,4 +1,4 @@
-package cultureland.hackathon.schedule.dto;
+package cultureland.hackathon.personalSchedule.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Getter;

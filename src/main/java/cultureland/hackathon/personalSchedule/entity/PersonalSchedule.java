@@ -1,8 +1,8 @@
-package cultureland.hackathon.schedule.entity;
+package cultureland.hackathon.personalSchedule.entity;
 
 import cultureland.hackathon.global.exception.GeneralException;
 import cultureland.hackathon.member.entity.Member;
-import cultureland.hackathon.schedule.code.PersonalScheduleErrorCode;
+import cultureland.hackathon.personalSchedule.code.PersonalScheduleErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
 

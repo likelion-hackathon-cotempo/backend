@@ -1,12 +1,12 @@
-package cultureland.hackathon.schedule.controller;
+package cultureland.hackathon.personalSchedule.controller;
 
 import cultureland.hackathon.global.api.ApiResponse;
 import cultureland.hackathon.global.config.SwaggerConfig;
 import cultureland.hackathon.global.security.AuthMember;
-import cultureland.hackathon.schedule.dto.PersonalScheduleCreateRequestDto;
-import cultureland.hackathon.schedule.dto.PersonalScheduleResponseDto;
-import cultureland.hackathon.schedule.dto.PersonalScheduleUpdateRequestDto;
-import cultureland.hackathon.schedule.service.PersonalScheduleService;
+import cultureland.hackathon.personalSchedule.dto.PersonalScheduleCreateRequestDto;
+import cultureland.hackathon.personalSchedule.dto.PersonalScheduleResponseDto;
+import cultureland.hackathon.personalSchedule.dto.PersonalScheduleUpdateRequestDto;
+import cultureland.hackathon.personalSchedule.service.PersonalScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

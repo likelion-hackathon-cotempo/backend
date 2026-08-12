@@ -1,6 +1,6 @@
-package cultureland.hackathon.schedule.dto;
+package cultureland.hackathon.personalSchedule.dto;
 
-import cultureland.hackathon.schedule.entity.PersonalSchedule;
+import cultureland.hackathon.personalSchedule.entity.PersonalSchedule;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

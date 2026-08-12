@@ -1,7 +1,7 @@
-package cultureland.hackathon.schedule.repository;
+package cultureland.hackathon.personalSchedule.repository;
 
 import cultureland.hackathon.member.entity.Member;
-import cultureland.hackathon.schedule.entity.PersonalSchedule;
+import cultureland.hackathon.personalSchedule.entity.PersonalSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

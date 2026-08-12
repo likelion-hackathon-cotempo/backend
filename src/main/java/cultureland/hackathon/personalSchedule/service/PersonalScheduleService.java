@@ -1,15 +1,15 @@
-package cultureland.hackathon.schedule.service;
+package cultureland.hackathon.personalSchedule.service;
 
 import cultureland.hackathon.global.exception.GeneralException;
 import cultureland.hackathon.member.code.MemberErrorCode;
 import cultureland.hackathon.member.entity.Member;
 import cultureland.hackathon.member.repository.MemberRepository;
-import cultureland.hackathon.schedule.code.PersonalScheduleErrorCode;
-import cultureland.hackathon.schedule.dto.PersonalScheduleCreateRequestDto;
-import cultureland.hackathon.schedule.dto.PersonalScheduleResponseDto;
-import cultureland.hackathon.schedule.dto.PersonalScheduleUpdateRequestDto;
-import cultureland.hackathon.schedule.entity.PersonalSchedule;
-import cultureland.hackathon.schedule.repository.PersonalScheduleRepository;
+import cultureland.hackathon.personalSchedule.code.PersonalScheduleErrorCode;
+import cultureland.hackathon.personalSchedule.dto.PersonalScheduleCreateRequestDto;
+import cultureland.hackathon.personalSchedule.dto.PersonalScheduleResponseDto;
+import cultureland.hackathon.personalSchedule.dto.PersonalScheduleUpdateRequestDto;
+import cultureland.hackathon.personalSchedule.entity.PersonalSchedule;
+import cultureland.hackathon.personalSchedule.repository.PersonalScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
