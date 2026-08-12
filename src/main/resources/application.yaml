@@ -20,3 +20,8 @@ management:
 
 jwt:
   access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION:3600000}
+
+openai:
+  api-key: ${OPENAI_API_KEY}
+  model: ${OPENAI_MODEL:gpt-5-mini}
+  timeout: ${OPENAI_TIMEOUT:10s}
