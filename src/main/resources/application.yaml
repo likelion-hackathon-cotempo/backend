@@ -25,3 +25,11 @@ openai:
   api-key: ${OPENAI_API_KEY}
   model: ${OPENAI_MODEL:gpt-5-mini}
   timeout: ${OPENAI_TIMEOUT:10s}
+
+app:
+  # 배포 환경에서는 application-prod.yaml이 덮어쓴다
+  cookie:
+    secure: false
+    same-site: Lax
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}

@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,13 @@ public class AuthController {
     private static final long COOKIE_MAX_AGE = 3600L;
 
     private final AuthService authService;
+
+    // 로컬(http)은 Lax/non-Secure, 배포(https)는 None/Secure로 프로필에 따라 주입된다.
+    @Value("${app.cookie.secure}")
+    private boolean cookieSecure;
+
+    @Value("${app.cookie.same-site}")
+    private String cookieSameSite;
 
     // 회원가입
     @Operation(
@@ -57,8 +65,8 @@ public class AuthController {
         ResponseCookie cookie = ResponseCookie
                 .from(ACCESS_TOKEN_COOKIE, accessToken)
                 .httpOnly(true)
-                .secure(false)
-                .sameSite("Lax")
+                .secure(cookieSecure)
+                .sameSite(cookieSameSite)
                 .path("/")
                 .maxAge(COOKIE_MAX_AGE)
                 .build();
@@ -83,9 +91,8 @@ public class AuthController {
         ResponseCookie cookie = ResponseCookie
                 .from(ACCESS_TOKEN_COOKIE, "")
                 .httpOnly(true)
-                // 로컬 http 개발용, https로 배포 시 수정 필요
-                .secure(false)
-                .sameSite("Lax")
+                .secure(cookieSecure)
+                .sameSite(cookieSameSite)
                 .path("/")
                 .maxAge(0)
                 .build();

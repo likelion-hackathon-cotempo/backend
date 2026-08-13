@@ -3,6 +3,7 @@ package cultureland.hackathon.global.config;
 import cultureland.hackathon.global.security.JwtAuthenticationEntryPoint;
 import cultureland.hackathon.global.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -79,13 +80,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource(
+            // CORS_ALLOWED_ORIGINS 환경변수로 주입 (쉼표 구분).
+            // 배포 주소가 바뀌어도 코드 수정 없이 재배포만 하면 된다.
+            @Value("${app.cors.allowed-origins}")
+            List<String> allowedOrigins
+    ) {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of(
-                "http://localhost:5173"
-                // 추후 프론트 배포 주소 추가
-        ));
+        // allowCredentials(true)와 와일드카드 Origin은 함께 쓸 수 없다.
+        // Vercel 프리뷰 URL처럼 패턴이 필요하면 setAllowedOriginPatterns를 써야 한다.
+        configuration.setAllowedOriginPatterns(allowedOrigins);
 
         configuration.setAllowedHeaders(List.of(
                 "Content-Type",
