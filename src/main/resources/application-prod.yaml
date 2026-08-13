@@ -10,3 +10,15 @@ spring:
 
 jwt:
   secret: ${JWT_SECRET}
+
+server:
+  # Nginx가 TLS를 종료하므로 X-Forwarded-* 헤더로 원래 스킴(https)을 인식시킨다.
+  # 없으면 스프링이 자신을 http로 판단해 Secure 쿠키를 내려보내지 않는다.
+  forward-headers-strategy: framework
+
+app:
+  # 프론트(Vercel)와 도메인이 달라 크로스 사이트 요청이 된다.
+  # SameSite=None이어야 쿠키가 전송되고, None은 Secure를 강제하므로 HTTPS 필수.
+  cookie:
+    secure: true
+    same-site: None
