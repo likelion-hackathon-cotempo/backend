@@ -20,10 +20,10 @@ public enum MilestoneErrorCode implements BaseErrorCode {
             "Milestone not found."
     ),
 
-    INVALID_PROJECT_DATE_RANGE(
+    INVALID_PROJECT_DEADLINE(
             HttpStatus.BAD_REQUEST,
             "MILESTONE_400_1",
-            "The project start date and time must be before the end date and time."
+            "The project deadline must be in the future."
     ),
     MILESTONE_RECOMMENDATION_NOT_FOUND(
             HttpStatus.UNPROCESSABLE_CONTENT,
