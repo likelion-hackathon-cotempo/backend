@@ -40,11 +40,12 @@ public final class MilestoneRecommendationPrompt {
                    - a short explanation of what should be completed
                 9. The final milestone should represent an appropriate closing stage for the project,
                    such as completion, submission, presentation, release, or final review.
-                10. Avoid duplicate, overly broad, or unnecessarily detailed milestones.
-                11. Return every dueDateTime as a UTC ISO-8601 value ending in Z.
-                12. Return all text fields in English.
-                13. Return only valid JSON.
-                14. Do not include Markdown, code fences, comments, or explanations outside the JSON.
+                10. Each recommendation must be independently understandable and usable as a milestone.
+                11. Do not include duplicate titles or milestones with substantially overlapping purposes.
+                12. Return every dueDateTime as a UTC ISO-8601 value ending in Z.
+                13. Return all text fields in English.
+                14. Return only valid JSON.
+                15. Do not include Markdown, code fences, comments, or explanations outside the JSON.
 
                 [Required JSON format]
                 {
