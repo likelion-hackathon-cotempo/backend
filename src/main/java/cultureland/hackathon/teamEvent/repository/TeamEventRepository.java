@@ -1,6 +1,6 @@
-package cultureland.hackathon.event.repository;
+package cultureland.hackathon.teamEvent.repository;
 
-import cultureland.hackathon.event.entity.TeamEvent;
+import cultureland.hackathon.teamEvent.entity.TeamEvent;
 import cultureland.hackathon.team.entity.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 

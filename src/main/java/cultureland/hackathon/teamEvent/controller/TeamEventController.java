@@ -1,9 +1,9 @@
-package cultureland.hackathon.event.controller;
+package cultureland.hackathon.teamEvent.controller;
 
-import cultureland.hackathon.event.dto.TeamEventCreateRequestDto;
-import cultureland.hackathon.event.dto.TeamEventResponseDto;
-import cultureland.hackathon.event.dto.TeamEventUpdateRequestDto;
-import cultureland.hackathon.event.service.TeamEventService;
+import cultureland.hackathon.teamEvent.dto.TeamEventCreateRequestDto;
+import cultureland.hackathon.teamEvent.dto.TeamEventResponseDto;
+import cultureland.hackathon.teamEvent.dto.TeamEventUpdateRequestDto;
+import cultureland.hackathon.teamEvent.service.TeamEventService;
 import cultureland.hackathon.global.api.ApiResponse;
 import cultureland.hackathon.global.config.SwaggerConfig;
 import cultureland.hackathon.global.security.AuthMember;

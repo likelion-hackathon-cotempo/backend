@@ -1,4 +1,4 @@
-package cultureland.hackathon.event.dto;
+package cultureland.hackathon.teamEvent.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

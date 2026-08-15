@@ -1,6 +1,6 @@
-package cultureland.hackathon.event.entity;
+package cultureland.hackathon.teamEvent.entity;
 
-import cultureland.hackathon.event.code.TeamEventErrorCode;
+import cultureland.hackathon.teamEvent.code.TeamEventErrorCode;
 import cultureland.hackathon.global.exception.GeneralException;
 import cultureland.hackathon.team.entity.Team;
 import jakarta.persistence.*;
