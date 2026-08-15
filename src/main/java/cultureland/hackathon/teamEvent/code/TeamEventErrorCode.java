@@ -23,6 +23,27 @@ public enum TeamEventErrorCode implements BaseErrorCode {
             HttpStatus.NOT_FOUND,
             "TEAM_EVENT_404_1",
             "Team event not found."
+    ),
+
+    INVALID_MEETING_DURATION(
+            HttpStatus.BAD_REQUEST,
+            "TEAM_EVENT_400_3",
+            "Meeting duration must be 30, 60, 90, or 120 minutes."
+    ),
+    SEARCH_PERIOD_TOO_SHORT(
+            HttpStatus.BAD_REQUEST,
+            "TEAM_EVENT_400_4",
+            "The search period must be longer than the meeting duration."
+    ),
+    MEETING_CANDIDATE_NOT_FOUND(
+            HttpStatus.UNPROCESSABLE_CONTENT,
+            "TEAM_EVENT_422_1",
+            "No available meeting time was found."
+    ),
+    INVALID_MEETING_RECOMMENDATION(
+            HttpStatus.BAD_GATEWAY,
+            "TEAM_EVENT_502_1",
+            "The AI generated an invalid meeting recommendation."
     );
 
     private final HttpStatus httpStatus;
