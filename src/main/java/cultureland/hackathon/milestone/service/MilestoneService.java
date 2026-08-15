@@ -2,9 +2,7 @@ package cultureland.hackathon.milestone.service;
 
 import cultureland.hackathon.global.exception.GeneralException;
 import cultureland.hackathon.milestone.code.MilestoneErrorCode;
-import cultureland.hackathon.milestone.dto.MilestoneCreateRequestDto;
-import cultureland.hackathon.milestone.dto.MilestoneResponseDto;
-import cultureland.hackathon.milestone.dto.MilestoneUpdateRequestDto;
+import cultureland.hackathon.milestone.dto.*;
 import cultureland.hackathon.milestone.entity.Milestone;
 import cultureland.hackathon.milestone.repository.MilestoneRepository;
 import cultureland.hackathon.team.entity.Team;
@@ -75,6 +73,34 @@ public class MilestoneService {
         Milestone milestone = getMilestone(milestoneId, team);
 
         milestoneRepository.delete(milestone);
+    }
+
+    // 마일스톤 추천 결과 전체 등록
+    public List<MilestoneResponseDto> createMilestonesInBulk(
+            Long memberId,
+            Long teamId,
+            MilestoneBulkCreateRequestDto requestDto
+    ) {
+        Team team = teamService.getJoinedTeam(memberId, teamId);
+
+        List<Milestone> milestones = requestDto.getMilestones().stream()
+                .map(milestoneRequest ->
+                        Milestone.create(
+                                team,
+                                milestoneRequest.getTitle(),
+                                toUtcDateTime(
+                                        milestoneRequest.getDueDateTime()
+                                )
+                        )
+                )
+                .toList();
+
+        List<Milestone> savedMilestones =
+                milestoneRepository.saveAll(milestones);
+
+        return savedMilestones.stream()
+                .map(MilestoneResponseDto::from)
+                .toList();
     }
 
 
