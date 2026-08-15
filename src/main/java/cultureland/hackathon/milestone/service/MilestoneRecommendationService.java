@@ -3,18 +3,12 @@ package cultureland.hackathon.milestone.service;
 import cultureland.hackathon.global.exception.GeneralException;
 import cultureland.hackathon.global.openai.client.OpenAiClient;
 import cultureland.hackathon.global.openai.code.OpenAiErrorCode;
-import cultureland.hackathon.member.code.MemberErrorCode;
-import cultureland.hackathon.member.entity.Member;
-import cultureland.hackathon.member.repository.MemberRepository;
 import cultureland.hackathon.milestone.code.MilestoneErrorCode;
 import cultureland.hackathon.milestone.dto.MilestoneAiResponseDto;
 import cultureland.hackathon.milestone.dto.MilestoneRecommendationRequestDto;
 import cultureland.hackathon.milestone.dto.MilestoneRecommendationResponseDto;
 import cultureland.hackathon.milestone.prompt.MilestoneRecommendationPrompt;
-import cultureland.hackathon.team.code.TeamErrorCode;
-import cultureland.hackathon.team.entity.Team;
-import cultureland.hackathon.team.repository.TeamMemberRepository;
-import cultureland.hackathon.team.repository.TeamRepository;
+import cultureland.hackathon.team.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tools.jackson.core.JacksonException;
@@ -29,9 +23,7 @@ public class MilestoneRecommendationService {
 
     private static final int MAX_RECOMMENDATIONS = 6;
 
-    private final MemberRepository memberRepository;
-    private final TeamRepository teamRepository;
-    private final TeamMemberRepository teamMemberRepository;
+    private final TeamService teamService;
     private final OpenAiClient openAiClient;
     private final ObjectMapper objectMapper;
 
@@ -51,11 +43,7 @@ public class MilestoneRecommendationService {
         );
 
         // 로그인 회원과 요청 대상 팀이 존재하는지 검증
-        Member member = findMember(memberId);
-        Team team = findTeam(teamId);
-
-        // 해당 팀에 참여 중인 경우에만 추천 기능 사용할 수 있도록 검증
-        validateTeamMember(team, member);
+        teamService.getJoinedTeam(memberId, teamId);
 
         // OpenAI 프롬프트 생성
         String prompt = MilestoneRecommendationPrompt.create(
@@ -94,41 +82,12 @@ public class MilestoneRecommendationService {
                 ).toList();
     }
 
-    // 로그인 회원 조회
-    private Member findMember(Long memberId) {
-        return memberRepository.findById(memberId)
-                .orElseThrow(() ->
-                        new GeneralException(
-                            MemberErrorCode.MEMBER_NOT_FOUND
-                        )
-                );
-    }
-
-    // 추천 요청 대상 팀 조회
-    private Team findTeam(Long teamId) {
-        return teamRepository.findById(teamId)
-                .orElseThrow(() ->
-                        new GeneralException(
-                                TeamErrorCode.TEAM_NOT_FOUND
-                        )
-                );
-    }
-
-    // 로그인 회원이 해당 팀에 참여하고 있는지 검증
-    private void validateTeamMember(
-            Team team,
-            Member member
-    ) {
-        if (!teamMemberRepository.existsByTeamAndMember(team, member)) {
-            throw new GeneralException(
-                    TeamErrorCode.NOT_TEAM_MEMBER
-            );
-        }
-    }
-
     // 프로젝트 최종 마감 시각이 추천 요청 시각보다 미래인지 검증
     private void validateDeadline(Instant startDateTime, Instant dueDateTime) {
-        if (!dueDateTime.isAfter(startDateTime)) {
+        if (
+                dueDateTime == null
+                || !dueDateTime.isAfter(startDateTime)
+        ) {
             throw new GeneralException(
                     MilestoneErrorCode.INVALID_PROJECT_DEADLINE
             );
