@@ -22,7 +22,7 @@ public enum MilestoneErrorCode implements BaseErrorCode {
 
     INVALID_PROJECT_DEADLINE(
             HttpStatus.BAD_REQUEST,
-            "MILESTONE_400_1",
+            "MILESTONE_400_2",
             "The project deadline must be in the future."
     ),
     MILESTONE_RECOMMENDATION_NOT_FOUND(
