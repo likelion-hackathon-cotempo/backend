@@ -1,10 +1,10 @@
 package cultureland.hackathon.teamEvent.prompt;
 
-public class MeetingRecommendationPrompt {
+public final class MeetingRecommendationPrompt {
 
     private static final int MAX_RECOMMENDATIONS = 3;
 
-    private final class MeetingRecommendationPrompt() {
+    private MeetingRecommendationPrompt() {
     }
 
     public static String create(String candidatesJson) {
