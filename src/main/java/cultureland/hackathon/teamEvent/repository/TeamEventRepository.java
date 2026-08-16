@@ -18,4 +18,5 @@ public interface TeamEventRepository extends JpaRepository<TeamEvent, Long> {
 
     Optional<TeamEvent> findByTeamEventIdAndTeam(Long teamEventId, Team team);
 
+    List<TeamEvent> findOverlapping(Team team, LocalDateTime start, LocalDateTime end);
 }
