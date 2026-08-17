@@ -68,7 +68,11 @@ public class CalendarService {
 
         events.addAll(
                 personalSchedules.stream()
-                        .map(this::toPersonalScheduleEvent)
+                        .map(schedule ->
+                                toPersonalScheduleEvent(
+                                        schedule, memberId
+                                )
+                        )
                         .toList()
         );
 
@@ -144,7 +148,11 @@ public class CalendarService {
 
         events.addAll(
                 personalSchedules.stream()
-                        .map(this::toPersonalScheduleEvent)
+                        .map(schedule ->
+                                toPersonalScheduleEvent(
+                                        schedule, memberId
+                                )
+                        )
                         .toList()
         );
 
@@ -198,9 +206,16 @@ public class CalendarService {
 
     // 개인 일정을 통합 캘린더 이벤트로 변환
     private CalendarEventDto toPersonalScheduleEvent(
-            PersonalSchedule personalSchedule
+            PersonalSchedule personalSchedule,
+            Long viewerId
     ) {
         Member owner = personalSchedule.getMember();
+
+        boolean editable =
+                Objects.equals(
+                        owner.getMemberId(),
+                        viewerId
+                );
 
         return CalendarEventDto.fromPersonalSchedule(
                 personalSchedule.getPersonalScheduleId(),
@@ -208,7 +223,11 @@ public class CalendarService {
                 owner.getName(),
                 personalSchedule.getTitle(),
                 toInstant(personalSchedule.getStartDateTime()),
-                toInstant(personalSchedule.getEndDateTime())
+                toInstant(personalSchedule.getEndDateTime()),
+                editable
+                        ? personalSchedule.getWeight()
+                        : null,
+                editable
         );
     }
 

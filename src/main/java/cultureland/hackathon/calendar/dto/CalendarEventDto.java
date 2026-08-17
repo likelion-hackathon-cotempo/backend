@@ -45,6 +45,9 @@ public class CalendarEventDto {
     // 마일스톤 완료 여부
     private final Boolean completed;
 
+    // 개인 일정 가중치
+    private final Integer weight;
+
     public enum Type {
         PERSONAL_SCHEDULE,
         TEAM_EVENT,
@@ -60,7 +63,9 @@ public class CalendarEventDto {
             String memberName,
             String title,
             Instant startDateTime,
-            Instant endDateTime
+            Instant endDateTime,
+            Integer weight,
+            boolean editable
     ) {
         return CalendarEventDto.builder()
                 .id(id)
@@ -70,7 +75,8 @@ public class CalendarEventDto {
                 .type(Type.PERSONAL_SCHEDULE)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
-                .editable(false)
+                .weight(weight)
+                .editable(editable)
                 .build();
     }
 
