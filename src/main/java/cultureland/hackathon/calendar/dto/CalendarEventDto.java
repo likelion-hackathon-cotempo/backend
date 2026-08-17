@@ -42,6 +42,9 @@ public class CalendarEventDto {
     private final Long teamId;
     private final String teamName;
 
+    // 마일스톤 완료 여부
+    private final Boolean completed;
+
     public enum Type {
         PERSONAL_SCHEDULE,
         TEAM_EVENT,
@@ -57,8 +60,7 @@ public class CalendarEventDto {
             String memberName,
             String title,
             Instant startDateTime,
-            Instant endDateTime,
-            boolean editable
+            Instant endDateTime
     ) {
         return CalendarEventDto.builder()
                 .id(id)
@@ -68,7 +70,7 @@ public class CalendarEventDto {
                 .type(Type.PERSONAL_SCHEDULE)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
-                .editable(editable)
+                .editable(false)
                 .build();
     }
 
@@ -79,8 +81,7 @@ public class CalendarEventDto {
             String teamName,
             String title,
             Instant startDateTime,
-            Instant endDateTime,
-            boolean editable
+            Instant endDateTime
     ) {
         return CalendarEventDto.builder()
                 .id(id)
@@ -90,7 +91,7 @@ public class CalendarEventDto {
                 .type(Type.TEAM_EVENT)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
-                .editable(editable)
+                .editable(true)
                 .build();
     }
 
@@ -101,7 +102,7 @@ public class CalendarEventDto {
             String teamName,
             String title,
             Instant dueDateTime,
-            boolean editable
+            boolean completed
     ) {
         return CalendarEventDto.builder()
                 .id(id)
@@ -110,7 +111,8 @@ public class CalendarEventDto {
                 .title(title)
                 .type(Type.MILESTONE)
                 .dueDateTime(dueDateTime)
-                .editable(editable)
+                .completed(completed)
+                .editable(true)
                 .build();
     }
 
