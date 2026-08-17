@@ -28,6 +28,10 @@ public class MeetingCandidateCalculator {
 
     private final CalendarMockDataProvider calendarMockDataProvider;
 
+    // 팀원별 선호 회의 시간 범위
+    private static final LocalTime PREFERRED_HOURS_START = LocalTime.of(8, 0);
+    private static final LocalTime PREFERRED_HOURS_END = LocalTime.of(22, 0);
+
     // 요청 기간 내 회의 후보 계산
     // 팀 일정, 공휴일, 학사 일정과 겹치는 시간은 완전히 제외 후 개인 일정과 겹치는 시간은 가중치를 점수로 변환
     public List<MeetingCandidateDto> calculate(
@@ -94,11 +98,17 @@ public class MeetingCandidateCalculator {
             candidateStart = moveToNextSlot(candidateStart);
         }
 
-        // 개인 일정 충돌 점수 낮은 순으로 정렬, 점수 같을 시 더 이른 시간 우선
+        // 선호 시간대를 벗어난 팀원 수가 적은 순으로 정렬하고 그 이후 개인 일정 충돌 점수와 시작 시각 기준 정렬
         scoredCandidates.sort(
                 Comparator.comparingInt(
-                        ScoredCandidate::totalConflictScore
-                ).thenComparing(ScoredCandidate::startDateTime)
+                                ScoredCandidate::outsidePreferredHoursMemberCount
+                        )
+                        .thenComparingInt(
+                                ScoredCandidate::totalConflictScore
+                        )
+                        .thenComparing(
+                                ScoredCandidate::startDateTime
+                        )
         );
 
         List<MeetingCandidateDto> result = new ArrayList<>();
@@ -133,6 +143,8 @@ public class MeetingCandidateCalculator {
             Map<Long, List<PersonalSchedule>> schedulesByMemberId
     ) {
         int totalConflictScore = 0;
+        int outsidePreferredHoursMemberCount = 0;
+
         List<MeetingCandidateDto.MemberContext> memberContexts = new ArrayList<>();
 
         for (Member member : members) {
@@ -169,6 +181,13 @@ public class MeetingCandidateCalculator {
                             memberZoneId
                     );
 
+            if (isOutsidePreferredHours(
+                    localStartDateTime,
+                    localEndDateTime
+            )) {
+                outsidePreferredHoursMemberCount++;
+            }
+
             memberContexts.add(
                     MeetingCandidateDto.MemberContext.of(
                             member.getMemberId(),
@@ -187,6 +206,7 @@ public class MeetingCandidateCalculator {
                 candidateStart,
                 candidateEnd,
                 totalConflictScore,
+                outsidePreferredHoursMemberCount,
                 List.copyOf(memberContexts)
         );
     }
@@ -298,8 +318,24 @@ public class MeetingCandidateCalculator {
             Instant startDateTime,
             Instant endDateTime,
             int totalConflictScore,
+            int outsidePreferredHoursMemberCount,
             List<MeetingCandidateDto.MemberContext> members
     ) {
+    }
 
+    // 회의 전체가 같은 날짜의 오전 8시 ~ 오후 10시 안에 포함되는지 확인
+    private boolean isOutsidePreferredHours(
+            LocalDateTime localStart,
+            LocalDateTime localEnd
+    ) {
+        if (!localStart.toLocalDate().equals(localEnd.toLocalDate())
+        ) {
+            return true;
+        }
+
+        return localStart.toLocalTime()
+                .isBefore(PREFERRED_HOURS_START)
+                || localEnd.toLocalTime()
+                .isAfter(PREFERRED_HOURS_END);
     }
 }
