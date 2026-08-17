@@ -1,11 +1,11 @@
-package cultureland.hackathon.event.service;
+package cultureland.hackathon.teamEvent.service;
 
-import cultureland.hackathon.event.code.TeamEventErrorCode;
-import cultureland.hackathon.event.dto.TeamEventCreateRequestDto;
-import cultureland.hackathon.event.dto.TeamEventResponseDto;
-import cultureland.hackathon.event.dto.TeamEventUpdateRequestDto;
-import cultureland.hackathon.event.entity.TeamEvent;
-import cultureland.hackathon.event.repository.TeamEventRepository;
+import cultureland.hackathon.teamEvent.code.TeamEventErrorCode;
+import cultureland.hackathon.teamEvent.dto.TeamEventCreateRequestDto;
+import cultureland.hackathon.teamEvent.dto.TeamEventResponseDto;
+import cultureland.hackathon.teamEvent.dto.TeamEventUpdateRequestDto;
+import cultureland.hackathon.teamEvent.entity.TeamEvent;
+import cultureland.hackathon.teamEvent.repository.TeamEventRepository;
 import cultureland.hackathon.global.exception.GeneralException;
 import cultureland.hackathon.team.entity.Team;
 import cultureland.hackathon.team.service.TeamService;

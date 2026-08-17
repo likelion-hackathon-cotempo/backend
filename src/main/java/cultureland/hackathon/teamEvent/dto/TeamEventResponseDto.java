@@ -1,6 +1,6 @@
-package cultureland.hackathon.event.dto;
+package cultureland.hackathon.teamEvent.dto;
 
-import cultureland.hackathon.event.entity.TeamEvent;
+import cultureland.hackathon.teamEvent.entity.TeamEvent;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
