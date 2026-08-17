@@ -41,6 +41,8 @@ public class MeetingRecommendationService {
 
     private static final int MAX_RECOMMENDATIONS = 3;
 
+    private static final Duration MAX_SEARCH_PERIOD = Duration.ofDays(90);
+
     private final TeamService teamService;
     private final TeamMemberRepository teamMemberRepository;
     private final TeamEventRepository teamEventRepository;
@@ -182,13 +184,23 @@ public class MeetingRecommendationService {
             );
         }
 
+        Duration searchPeriod = Duration.between(searchStart, searchEnd);
+
         // 조회 기간 안에 최소 한번의 회의 배치할 수 있어야 함
         if (
-                Duration.between(searchStart, searchEnd)
-                        .compareTo(Duration.ofMinutes(durationMinutes)) < 0
+                searchPeriod.compareTo(
+                        Duration.ofMinutes(durationMinutes)
+                ) < 0
         ) {
             throw new GeneralException(
                     TeamEventErrorCode.SEARCH_PERIOD_TOO_SHORT
+            );
+        }
+
+        // 너무 넓은 검색 범위로 인한 후보 계산량 제한
+        if (searchPeriod.compareTo(MAX_SEARCH_PERIOD) > 0) {
+            throw new GeneralException(
+                    TeamEventErrorCode.SEARCH_PERIOD_TOO_LONG
             );
         }
     }

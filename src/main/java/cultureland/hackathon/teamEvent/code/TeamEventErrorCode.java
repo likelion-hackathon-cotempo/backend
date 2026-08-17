@@ -35,6 +35,11 @@ public enum TeamEventErrorCode implements BaseErrorCode {
             "TEAM_EVENT_400_4",
             "The search period must be longer than the meeting duration."
     ),
+    SEARCH_PERIOD_TOO_LONG(
+            HttpStatus.BAD_REQUEST,
+            "TEAM_EVENT_400_5",
+            "The search period must not exceed 90 days."
+    ),
     MEETING_CANDIDATE_NOT_FOUND(
             HttpStatus.UNPROCESSABLE_CONTENT,
             "TEAM_EVENT_422_1",
