@@ -34,6 +34,20 @@ public class CalendarEventDto {
     // 현재 로그인 사용자가 수정할 수 있는 일정인지 표시
     private final boolean editable;
 
+    // 개인 일정 소유 회원 정보
+    private final Long memberId;
+    private final String memberName;
+
+    // 팀 일정 및 마일스톤의 소속 팀 정보
+    private final Long teamId;
+    private final String teamName;
+
+    // 마일스톤 완료 여부
+    private final Boolean completed;
+
+    // 개인 일정 가중치
+    private final Integer weight;
+
     public enum Type {
         PERSONAL_SCHEDULE,
         TEAM_EVENT,
@@ -45,51 +59,66 @@ public class CalendarEventDto {
     // 개인 일정
     public static CalendarEventDto fromPersonalSchedule(
             Long id,
+            Long memberId,
+            String memberName,
             String title,
             Instant startDateTime,
-            Instant endDateTime
+            Instant endDateTime,
+            Integer weight,
+            boolean editable
     ) {
         return CalendarEventDto.builder()
                 .id(id)
+                .memberId(memberId)
+                .memberName(memberName)
                 .title(title)
                 .type(Type.PERSONAL_SCHEDULE)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
-                .editable(true)
+                .weight(weight)
+                .editable(editable)
                 .build();
     }
 
     // 팀 일정
     public static CalendarEventDto fromTeamEvent(
             Long id,
+            Long teamId,
+            String teamName,
             String title,
             Instant startDateTime,
-            Instant endDateTime,
-            boolean editable
+            Instant endDateTime
     ) {
         return CalendarEventDto.builder()
                 .id(id)
+                .teamId(teamId)
+                .teamName(teamName)
                 .title(title)
                 .type(Type.TEAM_EVENT)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
-                .editable(editable)
+                .editable(true)
                 .build();
     }
 
     // 마일스톤
     public static CalendarEventDto fromMilestone(
             Long id,
+            Long teamId,
+            String teamName,
             String title,
             Instant dueDateTime,
-            boolean editable
+            boolean completed
     ) {
         return CalendarEventDto.builder()
                 .id(id)
+                .teamId(teamId)
+                .teamName(teamName)
                 .title(title)
                 .type(Type.MILESTONE)
                 .dueDateTime(dueDateTime)
-                .editable(editable)
+                .completed(completed)
+                .editable(true)
                 .build();
     }
 

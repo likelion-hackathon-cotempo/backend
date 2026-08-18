@@ -31,4 +31,18 @@ public interface TeamEventRepository extends JpaRepository<TeamEvent, Long> {
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end
     );
+
+    // 참여 중인 여러 팀에서 조회 기간과 겹치는 팀 일정 조회
+    @Query("""
+        SELECT e FROM TeamEvent e
+        JOIN FETCH e.team
+        WHERE e.team IN :teams
+          AND e.startDateTime < :end
+          AND e.endDateTime > :start
+        """)
+    List<TeamEvent> findOverlappingByTeams(
+            @Param("teams") List<Team> teams,
+            @Param("start") LocalDateTime start,
+            @Param("end") LocalDateTime end
+    );
 }

@@ -5,8 +5,10 @@ import cultureland.hackathon.global.code.BaseErrorCode;
 import cultureland.hackathon.global.code.GeneralErrorCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,5 +59,27 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(code.getHttpStatus())
                 .body(ApiResponse.onFailure(code, errors));
+    }
+
+    // 필수 쿼리 파라미터 누락 또는 파라미터 타입 불일치 처리
+    @ExceptionHandler({
+            MissingServletRequestParameterException.class,
+            MethodArgumentTypeMismatchException.class
+    })
+    public ResponseEntity<ApiResponse<Void>>
+    handleRequestParameterException(
+            Exception exception
+    ) {
+        BaseErrorCode code =
+                GeneralErrorCode.BAD_REQUEST;
+
+        return ResponseEntity
+                .status(code.getHttpStatus())
+                .body(
+                        ApiResponse.onFailure(
+                                code,
+                                exception.getMessage()
+                        )
+                );
     }
 }
