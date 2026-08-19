@@ -100,30 +100,23 @@ public class MeetingCandidateCalculator {
 
         // 선호 시간대를 벗어난 팀원 수가 적은 순으로 정렬하고 그 이후 개인 일정 충돌 점수와 시작 시각 기준 정렬
         scoredCandidates.sort(
-                Comparator.comparingInt(
-                                ScoredCandidate::outsidePreferredHoursMemberCount
-                        )
-                        .thenComparingInt(
-                                ScoredCandidate::totalConflictScore
-                        )
-                        .thenComparing(
-                                ScoredCandidate::startDateTime
-                        )
+                Comparator
+                        .comparingInt(ScoredCandidate::outsidePreferredHoursMemberCount)
+                        .thenComparingInt(ScoredCandidate::totalConflictScore)
+                        .thenComparing(ScoredCandidate::startDateTime)
         );
+
+        List<ScoredCandidate> selectedCandidates =
+                selectNonOverlappingCandidates(scoredCandidates);
 
         List<MeetingCandidateDto> result = new ArrayList<>();
 
-        int resultSize = Math.min(
-                scoredCandidates.size(),
-                MAX_CANDIDATES
-        );
-
-        for (int index = 0; index < resultSize; index++) {
-            ScoredCandidate candidate = scoredCandidates.get(index);
+        for (int index = 0; index < selectedCandidates.size(); index++) {
+            ScoredCandidate candidate = selectedCandidates.get(index);
 
             result.add(
                     MeetingCandidateDto.of(
-                            index+1,
+                            index + 1,
                             candidate.startDateTime(),
                             candidate.endDateTime(),
                             candidate.totalConflictScore(),
@@ -337,5 +330,34 @@ public class MeetingCandidateCalculator {
                 .isBefore(PREFERRED_HOURS_START)
                 || localEnd.toLocalTime()
                 .isAfter(PREFERRED_HOURS_END);
+    }
+
+    // 후보 정렬 후 겹치지 않는 후보만 남김
+    private List<ScoredCandidate> selectNonOverlappingCandidates(
+            List<ScoredCandidate> sortedCandidates
+    ) {
+        List<ScoredCandidate> selectedCandidates = new ArrayList<>();
+
+        for (ScoredCandidate candidate : sortedCandidates) {
+            boolean overlapsSelectedCandidate = selectedCandidates.stream()
+                    .anyMatch(selected -> overlaps(
+                            candidate.startDateTime(),
+                            candidate.endDateTime(),
+                            selected.startDateTime(),
+                            selected.endDateTime()
+                    ));
+
+            if (overlapsSelectedCandidate) {
+                continue;
+            }
+
+            selectedCandidates.add(candidate);
+
+            if (selectedCandidates.size() == MAX_CANDIDATES) {
+                break;
+            }
+        }
+
+        return selectedCandidates;
     }
 }
