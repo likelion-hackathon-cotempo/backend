@@ -24,7 +24,7 @@ jwt:
 openai:
   api-key: ${OPENAI_API_KEY}
   model: ${OPENAI_MODEL:gpt-5-mini}
-  timeout: ${OPENAI_TIMEOUT:10s}
+  timeout: ${OPENAI_TIMEOUT:30s}
 
 app:
   # 배포 환경에서는 application-prod.yaml이 덮어쓴다

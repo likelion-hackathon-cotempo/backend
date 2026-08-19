@@ -5,7 +5,7 @@ jwt:
 openai:
   api-key: test-openai-api-key
   model: gpt-5-mini
-  timeout: 10s
+  timeout: 30s
 
 # src/test/resources/application.yaml이 클래스패스 우선순위로 main의 application.yaml을
 # 가리므로, main에만 있는 app.* 설정을 테스트 프로필에도 정의해 준다.
